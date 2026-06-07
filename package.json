@@ -1,11 +1,11 @@
 {
   "name": "espn-api",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "private": false,
-  "description": "Small unofficial Node client for ESPN's hidden API. One client, every sport.",
+  "description": "Unofficial Node client for ESPN's hidden API. One client for every sport, with retry transport and JSON parsers.",
   "scripts": {
-    "test": "node tests/sports.test.js",
+    "test": "node tests/sports.test.js && node tests/parse.test.js",
     "scoreboard": "node examples/scoreboard.js",
     "gamelog": "node examples/gamelog.js"
   },

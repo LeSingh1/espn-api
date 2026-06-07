@@ -1,17 +1,113 @@
 #!/usr/bin/env node
-// Builds the espn-api repo: a small, unofficial Node client for ESPN's hidden
-// API. The API is unified across sports (/sports/{sport}/{league}/...), so this
-// is one client covering every sport, not one repo per sport.
+// Builds the espn-api repo: an unofficial Node client for ESPN's hidden API.
+// One client for every sport, with retry/timeout transport and parsers that
+// turn ESPN's nested JSON into usable data.
 //   node build-espn-api.mjs   ->   ~/Claude/projects/espn-api
+// Re-running overwrites the source files but leaves .git in place.
 
-import { mkdirSync, writeFileSync, existsSync, rmSync, copyFileSync } from "node:fs";
+import { mkdirSync, writeFileSync, copyFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { homedir } from "node:os";
 
 const DIR = join(homedir(), "Claude", "projects", "espn-api");
 const AUTHOR = "Shaurya Singh";
-if (existsSync(DIR)) rmSync(DIR, { recursive: true, force: true });
 const w = (rel, content) => { const f = join(DIR, rel); mkdirSync(dirname(f), { recursive: true }); writeFileSync(f, content); };
+
+const PARSE = `// Turn ESPN's raw JSON into clean, usable shapes. ESPN responses are deeply
+// nested and inconsistent across endpoints; these pull out the parts you
+// actually want so you are not spelunking through competitions[0].competitors.
+
+export function parseScoreboard(raw) {
+  return (raw?.events || []).map((e) => {
+    const c = e.competitions?.[0] || {};
+    const side = (ha) => {
+      const x = (c.competitors || []).find((m) => m.homeAway === ha);
+      return x ? { id: x.team?.id, abbr: x.team?.abbreviation, name: x.team?.displayName, score: x.score, winner: x.winner } : null;
+    };
+    return {
+      id: e.id, name: e.name, shortName: e.shortName, date: e.date,
+      state: c.status?.type?.state, status: c.status?.type?.shortDetail, completed: !!c.status?.type?.completed,
+      home: side("home"), away: side("away"),
+    };
+  });
+}
+
+export function parseTeams(raw) {
+  return (raw?.sports?.[0]?.leagues?.[0]?.teams || []).map((t) => {
+    const x = t.team || t;
+    return { id: x.id, abbr: x.abbreviation, name: x.displayName, location: x.location, color: x.color, logo: x.logos?.[0]?.href };
+  });
+}
+
+export function parseRoster(raw) {
+  const out = [];
+  for (const g of raw?.athletes || []) {
+    const players = Array.isArray(g.items) ? g.items : [g];
+    for (const p of players) {
+      if (!p?.id) continue;
+      out.push({ id: p.id, name: p.displayName, position: p.position?.abbreviation, jersey: p.jersey, age: p.age, height: p.displayHeight, weight: p.displayWeight });
+    }
+  }
+  return out;
+}
+
+// The important one. ESPN stores game logs as a labels array plus rows of stat
+// strings keyed by eventId, with the date/opponent in a separate events map.
+// This zips them into [{ date, opponent, atVs, stats: { PTS, REB, ... } }].
+export function parseGamelog(raw) {
+  const labels = raw?.labels || [];
+  const meta = raw?.events || {};
+  const rows = [];
+  for (const st of raw?.seasonTypes || []) {
+    for (const cat of st.categories || []) {
+      for (const ev of cat.events || []) {
+        const m = meta[ev.eventId] || {};
+        const stats = {};
+        (ev.stats || []).forEach((v, i) => { if (labels[i]) stats[labels[i]] = v; });
+        rows.push({ eventId: ev.eventId, date: m.gameDate, opponent: m.opponent?.abbreviation, atVs: m.atVs, result: m.gameResult, score: m.score, stats });
+      }
+    }
+  }
+  return rows;
+}
+`;
+
+const TRANSPORT = `const TRANSIENT = new Set([429, 500, 502, 503, 504]);
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const backoff = (n) => Math.min(8000, 400 * 2 ** n) + Math.floor(Math.random() * 200);
+
+function qs(params) {
+  const e = Object.entries(params || {}).filter(([, v]) => v != null);
+  return e.length ? "?" + e.map(([k, v]) => \`\${k}=\${encodeURIComponent(v)}\`).join("&") : "";
+}
+
+// fetch with a timeout and retries on transient errors (429/5xx), honoring
+// Retry-After. Throws a clear error with the status and url on real failures.
+async function get(url, { timeout = 12000, retries = 3 } = {}) {
+  for (let attempt = 0; ; attempt++) {
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), timeout);
+    let res;
+    try {
+      res = await fetch(url, { headers: { "user-agent": UA }, signal: ctrl.signal });
+    } catch (e) {
+      clearTimeout(timer);
+      if (attempt >= retries) throw new Error(\`request failed for \${url}: \${e.message}\`);
+      await sleep(backoff(attempt));
+      continue;
+    }
+    clearTimeout(timer);
+    if (res.ok) return res.json();
+    if (TRANSIENT.has(res.status) && attempt < retries) {
+      const ra = Number(res.headers.get("retry-after"));
+      await sleep(Number.isFinite(ra) && ra > 0 ? ra * 1000 : backoff(attempt));
+      continue;
+    }
+    throw new Error(\`ESPN \${res.status} \${res.statusText} for \${url}\`);
+  }
+}`;
+
+w("src/parse.js", PARSE);
 
 w("src/sports.js", `// Sport + league mapping for ESPN's hidden API.
 // The API is unified: every endpoint is the same path, only {sport}/{league}
@@ -30,10 +126,7 @@ export const SPORTS = {
   wta:    { sport: "tennis",     league: "wta" },
   ufc:    { sport: "mma",        league: "ufc" },
   f1:     { sport: "racing",     league: "f1" },
-  // Soccer has many leagues. Default is the Premier League; pass any ESPN slug
-  // to sport("soccer") via the league override, e.g. "usa.1" (MLS),
-  // "esp.1" (La Liga), "uefa.champions".
-  soccer: { sport: "soccer",     league: "eng.1" },
+  soccer: { sport: "soccer",     league: "eng.1" }, // pass any league slug to sport("soccer", "usa.1")
 };
 
 export function resolve(sportKey) {
@@ -44,43 +137,43 @@ export function resolve(sportKey) {
 `);
 
 w("src/client.js", `import { resolve } from "./sports.js";
+import { parseScoreboard, parseTeams, parseRoster, parseGamelog } from "./parse.js";
 
-const SITE = "https://site.api.espn.com/apis/site/v2";
-const WEB  = "https://site.web.api.espn.com/apis/common/v3";
+const UA = "espn-api (github.com/LeSingh1/espn-api)";
+${TRANSPORT}
 
-function qs(params) {
-  const entries = Object.entries(params || {}).filter(([, v]) => v != null);
-  return entries.length ? "?" + entries.map(([k, v]) => \`\${k}=\${encodeURIComponent(v)}\`).join("&") : "";
-}
-
-async function get(url) {
-  const res = await fetch(url, { headers: { "user-agent": "espn-api (github.com/LeSingh1/espn-api)" } });
-  if (!res.ok) throw new Error(\`ESPN \${res.status} for \${url}\`);
-  return res.json();
-}
-
-// Returns an object with every endpoint bound to one sport's path. You can
-// override the league (useful for soccer): sport("soccer", "usa.1").
+// Returns an object with every endpoint bound to one sport's path, plus *Clean
+// helpers that fetch and parse in one call. Override the league for soccer:
+// sport("soccer", "usa.1").
 export function sport(sportKey, leagueOverride) {
   const r = resolve(sportKey);
   const s = r.sport, l = leagueOverride || r.league;
-  const base = \`\${SITE}/sports/\${s}/\${l}\`;
-  const web  = \`\${WEB}/sports/\${s}/\${l}\`;
-  return {
+  const SITE = \`https://site.api.espn.com/apis/site/v2/sports/\${s}/\${l}\`;
+  const WEB  = \`https://site.web.api.espn.com/apis/common/v3/sports/\${s}/\${l}\`;
+  const CORE = \`https://sports.core.api.espn.com/v2/sports/\${s}/leagues/\${l}\`;
+  const api = {
     sportKey, sport: s, league: l,
-    // scores for a date, e.g. scoreboard({ dates: "20260906" })
-    scoreboard: (params) => get(\`\${base}/scoreboard\${qs(params)}\`),
-    teams:      () => get(\`\${base}/teams\`),
-    team:       (teamId) => get(\`\${base}/teams/\${teamId}\`),
-    roster:     (teamId) => get(\`\${base}/teams/\${teamId}/roster\`),
-    athlete:    (athleteId) => get(\`\${web}/athletes/\${athleteId}\`),
-    // the one that matters for prop models: a player's per-game log
-    gamelog:    (athleteId) => get(\`\${web}/athletes/\${athleteId}/gamelog\`),
-    splits:     (athleteId) => get(\`\${web}/athletes/\${athleteId}/splits\`),
-    news:       (params) => get(\`\${base}/news\${qs(params)}\`),
-    summary:    (eventId) => get(\`\${base}/summary\${qs({ event: eventId })}\`),
-    standings:  () => get(\`\${base}/standings\`),
+    // ── raw endpoints (return ESPN JSON) ──
+    scoreboard: (params, o) => get(\`\${SITE}/scoreboard\${qs(params)}\`, o),   // ?dates=YYYYMMDD
+    teams:      (o) => get(\`\${SITE}/teams\`, o),
+    team:       (id, o) => get(\`\${SITE}/teams/\${id}\`, o),
+    roster:     (id, o) => get(\`\${SITE}/teams/\${id}/roster\`, o),
+    athlete:    (id, o) => get(\`\${WEB}/athletes/\${id}\`, o),
+    athletes:   ({ limit = 50, page = 1, active = true } = {}, o) => get(\`\${CORE}/athletes?limit=\${limit}&page=\${page}&active=\${active}\`, o),
+    gamelog:    (id, o) => get(\`\${WEB}/athletes/\${id}/gamelog\`, o),
+    splits:     (id, o) => get(\`\${WEB}/athletes/\${id}/splits\`, o),
+    news:       (params, o) => get(\`\${SITE}/news\${qs(params)}\`, o),
+    summary:    (eventId, o) => get(\`\${SITE}/summary\${qs({ event: eventId })}\`, o),
+    standings:  (o) => get(\`\${SITE}/standings\`, o),
+    odds:       (eventId, o) => get(\`\${CORE}/events/\${eventId}/competitions/\${eventId}/odds\`, o),
+    plays:      (eventId, { limit = 300 } = {}, o) => get(\`\${CORE}/events/\${eventId}/competitions/\${eventId}/plays?limit=\${limit}\`, o),
+    // ── parsed convenience (one call, clean data) ──
+    scoreboardClean: async (params, o) => parseScoreboard(await api.scoreboard(params, o)),
+    teamsClean:      async (o) => parseTeams(await api.teams(o)),
+    rosterClean:     async (id, o) => parseRoster(await api.roster(id, o)),
+    gamelogClean:    async (id, o) => parseGamelog(await api.gamelog(id, o)),
   };
+  return api;
 }
 `);
 
@@ -89,54 +182,82 @@ import { SPORTS } from "./sports.js";
 
 export { SPORTS, resolve } from "./sports.js";
 export { sport } from "./client.js";
+export { parseScoreboard, parseTeams, parseRoster, parseGamelog } from "./parse.js";
 
-// Convenience namespace: espn.nba.gamelog(id), espn.nfl.scoreboard({ dates }).
+// Convenience namespace: espn.nba.gamelogClean(id), espn.nfl.scoreboardClean().
 export const espn = Object.fromEntries(Object.keys(SPORTS).map((k) => [k, sport(k)]));
 `);
 
 w("examples/scoreboard.js", `import { sport } from "../src/index.js";
 
-// No IDs needed, so this is the safest thing to run first.
-const board = await sport("nba").scoreboard();
-const games = (board.events || []).map((e) => e.name);
-console.log("NBA games on the board:", games.length);
-for (const g of games.slice(0, 8)) console.log("  " + g);
+// scoreboardClean returns a tidy array instead of ESPN's nested JSON.
+const games = await sport("nba").scoreboardClean();
+console.log("NBA games:", games.length);
+for (const g of games.slice(0, 8)) {
+  console.log(\`  \${g.away?.abbr || "?"} @ \${g.home?.abbr || "?"}  \${g.status || g.date}\`);
+}
 `);
 
 w("examples/gamelog.js", `import { sport } from "../src/index.js";
 
-// Find an athlete id from a team roster, then pull their game log.
-// (Pass an id directly if you already have one: sport("wnba").gamelog("4433403"))
+// Discover a player from a roster, then pull a CLEAN game log.
 const nba = sport("nba");
-const teams = await nba.teams();
-const firstTeam = teams.sports[0].leagues[0].teams[0].team;
-const roster = await nba.roster(firstTeam.id);
-const player = roster.athletes?.[0]?.items?.[0] || roster.athletes?.[0];
-if (!player) { console.log("no roster returned, try another team"); process.exit(0); }
-console.log(\`\${player.displayName} (\${firstTeam.displayName}) id=\${player.id}\`);
-const log = await nba.gamelog(player.id);
-const events = Object.values(log.events || {}).slice(0, 5);
-console.log("last games:", events.map((e) => \`\${e.opponent?.abbreviation || "?"} \${e.gameDate?.slice(0, 10) || ""}\`));
+const teams = await nba.teamsClean();
+const roster = await nba.rosterClean(teams[0].id);
+const player = roster[0];
+console.log(\`\${player.name} (\${teams[0].abbr})\`);
+const log = await nba.gamelogClean(player.id);
+console.log("games:", log.length);
+for (const g of log.slice(0, 5)) {
+  console.log(\`  \${g.date?.slice(0, 10)} \${g.atVs} \${g.opponent}  PTS \${g.stats.PTS}  REB \${g.stats.REB}  AST \${g.stats.AST}\`);
+}
+`);
+
+w("tests/parse.test.js", `import assert from "node:assert";
+import { parseGamelog, parseScoreboard, parseRoster, parseTeams } from "../src/parse.js";
+
+// gamelog: zip labels + stat rows, join the date/opponent by eventId.
+const gl = {
+  labels: ["PTS", "REB", "AST"],
+  events: { "1": { gameDate: "2026-01-01T00:00Z", opponent: { abbreviation: "NY" }, atVs: "vs" } },
+  seasonTypes: [{ categories: [{ events: [{ eventId: "1", stats: ["20", "5", "7"] }] }] }],
+};
+const rows = parseGamelog(gl);
+assert.strictEqual(rows.length, 1);
+assert.strictEqual(rows[0].stats.PTS, "20");
+assert.strictEqual(rows[0].opponent, "NY");
+assert.strictEqual(rows[0].atVs, "vs");
+
+// scoreboard: pick out home/away cleanly.
+const sb = { events: [{ id: "9", name: "A at B", competitions: [{ status: { type: { state: "pre", shortDetail: "8pm" } }, competitors: [{ homeAway: "home", score: "0", team: { id: "1", abbreviation: "B" } }, { homeAway: "away", score: "0", team: { id: "2", abbreviation: "A" } }] }] }] };
+assert.strictEqual(parseScoreboard(sb)[0].home.abbr, "B");
+assert.strictEqual(parseScoreboard(sb)[0].away.abbr, "A");
+
+// roster handles both grouped and flat shapes.
+assert.strictEqual(parseRoster({ athletes: [{ items: [{ id: "5", displayName: "X", position: { abbreviation: "G" } }] }] })[0].name, "X");
+assert.strictEqual(parseRoster({ athletes: [{ id: "6", displayName: "Y" }] })[0].id, "6");
+
+// teams pulls from the nested sports->leagues->teams shape.
+assert.strictEqual(parseTeams({ sports: [{ leagues: [{ teams: [{ team: { id: "1", abbreviation: "AT", displayName: "Atl" } }] }] }] })[0].abbr, "AT");
+
+console.log("ok: parsers produce clean rows for gamelog, scoreboard, roster, teams");
 `);
 
 w("tests/sports.test.js", `import assert from "node:assert";
 import { resolve, SPORTS } from "../src/sports.js";
 
-// Mapping resolves and is case-insensitive.
 assert.deepStrictEqual(resolve("nba"), { sport: "basketball", league: "nba" });
 assert.deepStrictEqual(resolve("NFL"), { sport: "football", league: "nfl" });
-// Unknown sport throws with a helpful message.
 assert.throws(() => resolve("quidditch"), /unknown sport/);
-// Covers a real spread of leagues.
 assert.ok(Object.keys(SPORTS).length >= 12, "should map 12+ sports");
 
 console.log("ok: mapping resolves", Object.keys(SPORTS).length, "sports, unknowns throw");
 `);
 
 w("package.json", JSON.stringify({
-  name: "espn-api", version: "1.0.0", type: "module", private: false,
-  description: "Small unofficial Node client for ESPN's hidden API. One client, every sport.",
-  scripts: { test: "node tests/sports.test.js", scoreboard: "node examples/scoreboard.js", gamelog: "node examples/gamelog.js" },
+  name: "espn-api", version: "1.1.0", type: "module", private: false,
+  description: "Unofficial Node client for ESPN's hidden API. One client for every sport, with retry transport and JSON parsers.",
+  scripts: { test: "node tests/sports.test.js && node tests/parse.test.js", scoreboard: "node examples/scoreboard.js", gamelog: "node examples/gamelog.js" },
   license: "MIT", author: AUTHOR,
 }, null, 2) + "\n");
 
@@ -148,24 +269,15 @@ Copyright (c) 2026 ${AUTHOR}
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED. IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-USE OR OTHER DEALINGS IN THE SOFTWARE.
+in the Software without restriction. The Software is provided "as is", without
+warranty of any kind.
 `);
 
 w("README.md", `# espn-api
 
-A small, unofficial Node client for ESPN's hidden API. One client that covers
-every sport, because ESPN's API is one API.
+An unofficial Node client for ESPN's hidden API. One client that covers every
+sport, with retry/timeout transport and parsers that hand back clean data
+instead of ESPN's deeply nested JSON.
 
 I built this as the data layer under EdgeBoard and the edge-models projects.
 Those models project player props from game logs, and the game logs come from
@@ -173,7 +285,7 @@ here.
 
 ## Why one repo and not one per sport
 
-ESPN's endpoints are the same for every sport. Only the path changes:
+ESPN's endpoints are identical for every sport. Only the path changes:
 
 \`\`\`
 /sports/{sport}/{league}/scoreboard
@@ -182,21 +294,20 @@ ESPN's endpoints are the same for every sport. Only the path changes:
 \`\`\`
 
 So "nba", "nfl", "mlb" and the rest are the same code with a different
-\`{sport}/{league}\` string. Splitting that into 13 repos would just be 13 copies
-of one file. (This is the opposite of swar/nba_api, which is NBA only because
-NBA.com runs its own separate stats API.) The sport map is in
-[src/sports.js](src/sports.js).
+\`{sport}/{league}\` string. (This is the opposite of swar/nba_api, which is NBA
+only because NBA.com runs its own separate stats API.) There are also focused
+single-sport repos if you only want one league: nba-api, nfl-api, and so on.
 
 ## Install and run
 
-No dependencies. Node 18+ (it uses the built-in fetch).
+No dependencies. Node 18+ (built-in fetch).
 
 \`\`\`
 git clone https://github.com/LeSingh1/espn-api
 cd espn-api
-node examples/scoreboard.js     # NBA games on the board right now
-node examples/gamelog.js        # pull a real player's game log
-node tests/sports.test.js
+node examples/scoreboard.js
+node examples/gamelog.js
+npm test
 \`\`\`
 
 ## Use it
@@ -204,37 +315,52 @@ node tests/sports.test.js
 \`\`\`js
 import { sport, espn } from "./src/index.js";
 
-await sport("nfl").scoreboard({ dates: "20260906" });
-await sport("wnba").gamelog("4433403");        // a player's per-game log
-await espn.nba.teams();                         // same thing, namespace style
-await sport("soccer", "usa.1").scoreboard();    // override the league for soccer
+const nba = sport("nba");
+await nba.scoreboardClean();              // tidy array of games
+await nba.gamelogClean("4278039");        // [{ date, opponent, atVs, stats: { PTS, REB, ... } }]
+await espn.nfl.teamsClean();              // namespace style
+await sport("soccer", "usa.1").scoreboard();   // override the league for soccer
 \`\`\`
 
-Each sport gives you: \`scoreboard\`, \`teams\`, \`team\`, \`roster\`, \`athlete\`,
-\`gamelog\`, \`splits\`, \`news\`, \`summary\`, \`standings\`.
+### Raw endpoints
+
+\`scoreboard\`, \`teams\`, \`team\`, \`roster\`, \`athlete\`, \`athletes\` (paginated),
+\`gamelog\`, \`splits\`, \`news\`, \`summary\`, \`standings\`, \`odds\`, \`plays\`. Each
+returns ESPN's JSON unchanged. Every call takes an options object
+\`{ timeout, retries }\`.
+
+### Parsed helpers
+
+\`scoreboardClean\`, \`teamsClean\`, \`rosterClean\`, \`gamelogClean\` fetch and
+normalize in one call. The gamelog parser is the useful one: it zips ESPN's
+label array with the per-game stat rows and joins the date and opponent, so you
+get \`{ date, opponent, atVs, stats: { PTS, REB, AST, ... } }\` instead of parallel
+arrays.
+
+## Transport
+
+Every request has a 12 second timeout and retries up to 3 times on 429 and 5xx,
+honoring \`Retry-After\` with exponential backoff. Real failures throw an error
+with the status and the url.
 
 ## Sports covered
 
 NBA, WNBA, NCAA basketball (men and women), NFL, college football, MLB, NHL,
 PGA, ATP and WTA tennis, UFC, F1, and soccer (any ESPN league slug). Add more by
-editing the map in \`src/sports.js\`.
+editing \`src/sports.js\`.
 
 ## Honest notes
 
-- This is unofficial. ESPN does not document or support these endpoints, so they
-  can change or break without warning. Pin nothing important to them.
-- No auth, no key. That also means no SLA. Be polite: cache responses, do not
-  hammer it, and do not use it for anything ESPN would call abuse.
-- The endpoint list comes from [this community gist](https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c),
-  which is the best public map of ESPN's API. Credit there.
+- Unofficial. ESPN does not document or support these endpoints, so they can
+  change or break without warning. Cache responses and do not hammer it.
+- No auth, no SLA. Be polite.
+- Endpoint map credit: [this community gist](https://gist.github.com/nntrn/ee26cb2a0716de0947a0a4e9a157bc1c).
 
 ## License
 
 MIT.
 `);
 
-// keep the generator in the repo as a real artifact
 mkdirSync(join(DIR, "scripts"), { recursive: true });
 copyFileSync(new URL(import.meta.url), join(DIR, "scripts", "build.mjs"));
-
-console.log("built", DIR);
+console.log("rebuilt", DIR);

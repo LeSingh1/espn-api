@@ -15,10 +15,7 @@ export const SPORTS = {
   wta:    { sport: "tennis",     league: "wta" },
   ufc:    { sport: "mma",        league: "ufc" },
   f1:     { sport: "racing",     league: "f1" },
-  // Soccer has many leagues. Default is the Premier League; pass any ESPN slug
-  // to sport("soccer") via the league override, e.g. "usa.1" (MLS),
-  // "esp.1" (La Liga), "uefa.champions".
-  soccer: { sport: "soccer",     league: "eng.1" },
+  soccer: { sport: "soccer",     league: "eng.1" }, // pass any league slug to sport("soccer", "usa.1")
 };
 
 export function resolve(sportKey) {
