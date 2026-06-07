@@ -1,5 +1,7 @@
 # espn-api
 
+![CI](https://github.com/LeSingh1/espn-api/actions/workflows/test.yml/badge.svg) ![license](https://img.shields.io/badge/license-MIT-blue.svg) ![node](https://img.shields.io/badge/node-%E2%89%A518-brightgreen.svg) ![dependencies](https://img.shields.io/badge/dependencies-0-success.svg)
+
 An unofficial Node client for ESPN's hidden API. One client that covers every
 sport, with retry/timeout transport and parsers that hand back clean data
 instead of ESPN's deeply nested JSON.

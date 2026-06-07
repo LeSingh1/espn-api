@@ -10,5 +10,6 @@
     "gamelog": "node examples/gamelog.js"
   },
   "license": "MIT",
-  "author": "Shaurya Singh"
+  "author": "Shaurya Singh",
+  "types": "src/index.d.ts"
 }
