@@ -1,0 +1,14 @@
+{
+  "name": "espn-api",
+  "version": "1.0.0",
+  "type": "module",
+  "private": false,
+  "description": "Small unofficial Node client for ESPN's hidden API. One client, every sport.",
+  "scripts": {
+    "test": "node tests/sports.test.js",
+    "scoreboard": "node examples/scoreboard.js",
+    "gamelog": "node examples/gamelog.js"
+  },
+  "license": "MIT",
+  "author": "Shaurya Singh"
+}
