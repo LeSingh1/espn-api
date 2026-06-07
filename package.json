@@ -1,13 +1,14 @@
 {
   "name": "espn-api",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "private": false,
   "description": "Unofficial Node client for ESPN's hidden API. One client for every sport, with retry transport and JSON parsers.",
   "scripts": {
     "test": "node tests/sports.test.js && node tests/parse.test.js",
     "scoreboard": "node examples/scoreboard.js",
-    "gamelog": "node examples/gamelog.js"
+    "gamelog": "node examples/gamelog.js",
+    "snapshot:daily": "node scripts/snapshot-daily.js"
   },
   "license": "MIT",
   "author": "Shaurya Singh",

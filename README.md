@@ -64,11 +64,22 @@ label array with the per-game stat rows and joins the date and opponent, so you
 get `{ date, opponent, atVs, stats: { PTS, REB, AST, ... } }` instead of parallel
 arrays.
 
+## Daily data
+
+A scheduled GitHub Action runs once a day, pulls that day's games for a handful
+of core leagues (NBA, WNBA, NFL, MLB, NHL) from live ESPN, and commits them to
+`data/latest.json` when anything is in season. Off-season days leave the last
+snapshot in place, so the file is always the most recent day that actually had
+games. The same run is a canary: if ESPN changes or breaks an endpoint the job
+fails, so a red build is the early warning that the client needs a fix. Run it
+yourself with `npm run snapshot:daily`.
+
 ## Transport
 
 Every request has a 12 second timeout and retries up to 3 times on 429 and 5xx,
-honoring `Retry-After` with exponential backoff. Real failures throw an error
-with the status and the url.
+honoring `Retry-After` with exponential backoff. Failures throw an Error whose
+`.status` and `.url` are set, so you can branch on the HTTP status (e.g. skip a
+404, back off on a 429).
 
 ## Sports covered
 

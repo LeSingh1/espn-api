@@ -92,7 +92,7 @@ async function get(url, { timeout = 12000, retries = 3 } = {}) {
       res = await fetch(url, { headers: { "user-agent": UA }, signal: ctrl.signal });
     } catch (e) {
       clearTimeout(timer);
-      if (attempt >= retries) throw new Error(\`request failed for \${url}: \${e.message}\`);
+      if (attempt >= retries) throw Object.assign(new Error(\`request failed for \${url}: \${e.message}\`), { url, cause: e });
       await sleep(backoff(attempt));
       continue;
     }
@@ -103,7 +103,7 @@ async function get(url, { timeout = 12000, retries = 3 } = {}) {
       await sleep(Number.isFinite(ra) && ra > 0 ? ra * 1000 : backoff(attempt));
       continue;
     }
-    throw new Error(\`ESPN \${res.status} \${res.statusText} for \${url}\`);
+    throw Object.assign(new Error(\`ESPN \${res.status} \${res.statusText} for \${url}\`), { status: res.status, url });
   }
 }`;
 
@@ -254,10 +254,81 @@ assert.ok(Object.keys(SPORTS).length >= 12, "should map 12+ sports");
 console.log("ok: mapping resolves", Object.keys(SPORTS).length, "sports, unknowns throw");
 `);
 
+// Daily snapshot across a handful of core sports. Pulls today's games from the
+// live API and writes data/latest.json only when something is in season, so the
+// repo refreshes with real data daily and holds otherwise. No try/catch: an
+// off-season sport returns an empty array (not an error), so the only way this
+// throws is a genuine ESPN breakage — which is exactly when the scheduled run
+// should go red.
+w("scripts/snapshot-daily.js", `import { writeFileSync, mkdirSync } from "node:fs";
+import { sport } from "../src/index.js";
+
+const KEYS = ["nba", "wnba", "nfl", "mlb", "nhl"];
+const ymd = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit",
+}).format(new Date()).replaceAll("-", "");
+
+const sports = {};
+let total = 0;
+for (const k of KEYS) {
+  const games = await sport(k).scoreboardClean({ dates: ymd });
+  if (games.length) { sports[k] = games; total += games.length; }
+}
+if (total === 0) {
+  console.log(\`\${ymd}: no games across \${KEYS.join(", ")} today; leaving snapshot unchanged\`);
+  process.exit(0);
+}
+mkdirSync("data", { recursive: true });
+writeFileSync("data/latest.json", JSON.stringify({ date: ymd, sports }, null, 2) + "\\n");
+console.log(\`\${ymd}: wrote \${total} games across \${Object.keys(sports).length} sports -> data/latest.json\`);
+`);
+
+w(".github/workflows/daily-data.yml", `name: daily-data
+
+on:
+  schedule:
+    - cron: "17 12 * * *"   # 12:17 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: daily-data
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Fetch today's games from live ESPN
+        run: node scripts/snapshot-daily.js
+      - name: Commit refreshed snapshot if it changed
+        run: |
+          if [ -n "$(git status --porcelain data/)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/
+            git commit -m "data: daily snapshot $(date -u +%Y-%m-%d)"
+            git push
+          else
+            echo "No new data; nothing to commit."
+          fi
+`);
+
 w("package.json", JSON.stringify({
-  name: "espn-api", version: "1.1.0", type: "module", private: false,
+  name: "espn-api", version: "1.2.0", type: "module", private: false,
   description: "Unofficial Node client for ESPN's hidden API. One client for every sport, with retry transport and JSON parsers.",
-  scripts: { test: "node tests/sports.test.js && node tests/parse.test.js", scoreboard: "node examples/scoreboard.js", gamelog: "node examples/gamelog.js" },
+  scripts: {
+    test: "node tests/sports.test.js && node tests/parse.test.js",
+    scoreboard: "node examples/scoreboard.js",
+    gamelog: "node examples/gamelog.js",
+    "snapshot:daily": "node scripts/snapshot-daily.js",
+  },
   license: "MIT", author: AUTHOR,
 }, null, 2) + "\n");
 
@@ -337,11 +408,22 @@ label array with the per-game stat rows and joins the date and opponent, so you
 get \`{ date, opponent, atVs, stats: { PTS, REB, AST, ... } }\` instead of parallel
 arrays.
 
+## Daily data
+
+A scheduled GitHub Action runs once a day, pulls that day's games for a handful
+of core leagues (NBA, WNBA, NFL, MLB, NHL) from live ESPN, and commits them to
+\`data/latest.json\` when anything is in season. Off-season days leave the last
+snapshot in place, so the file is always the most recent day that actually had
+games. The same run is a canary: if ESPN changes or breaks an endpoint the job
+fails, so a red build is the early warning that the client needs a fix. Run it
+yourself with \`npm run snapshot:daily\`.
+
 ## Transport
 
 Every request has a 12 second timeout and retries up to 3 times on 429 and 5xx,
-honoring \`Retry-After\` with exponential backoff. Real failures throw an error
-with the status and the url.
+honoring \`Retry-After\` with exponential backoff. Failures throw an Error whose
+\`.status\` and \`.url\` are set, so you can branch on the HTTP status (e.g. skip a
+404, back off on a 429).
 
 ## Sports covered
 
