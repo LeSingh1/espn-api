@@ -1,142 +1,100 @@
 {
-  "date": "20260627",
+  "date": "20260628",
   "sports": {
     "wnba": [
       {
-        "id": "401857027",
-        "name": "Phoenix Mercury at Toronto Tempo",
-        "shortName": "PHX @ TOR",
-        "date": "2026-06-27T18:00Z",
+        "id": "401857030",
+        "name": "Minnesota Lynx at Dallas Wings",
+        "shortName": "MIN @ DAL",
+        "date": "2026-06-28T18:00Z",
         "state": "pre",
-        "status": "6/27 - 2:00 PM EDT",
+        "status": "6/28 - 2:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "131935",
-          "abbr": "TOR",
-          "name": "Toronto Tempo",
+          "id": "3",
+          "abbr": "DAL",
+          "name": "Dallas Wings",
           "score": "0"
         },
         "away": {
-          "id": "11",
-          "abbr": "PHX",
-          "name": "Phoenix Mercury",
+          "id": "8",
+          "abbr": "MIN",
+          "name": "Minnesota Lynx",
           "score": "0"
         }
       },
       {
-        "id": "401857028",
-        "name": "Los Angeles Sparks at Indiana Fever",
-        "shortName": "LA @ IND",
-        "date": "2026-06-28T00:00Z",
+        "id": "401857031",
+        "name": "Portland Fire at Washington Mystics",
+        "shortName": "POR @ WSH",
+        "date": "2026-06-28T19:00Z",
         "state": "pre",
-        "status": "6/27 - 8:00 PM EDT",
+        "status": "6/28 - 3:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "5",
-          "abbr": "IND",
-          "name": "Indiana Fever",
+          "id": "16",
+          "abbr": "WSH",
+          "name": "Washington Mystics",
           "score": "0"
         },
         "away": {
-          "id": "6",
-          "abbr": "LA",
-          "name": "Los Angeles Sparks",
+          "id": "132052",
+          "abbr": "POR",
+          "name": "Portland Fire",
           "score": "0"
         }
       },
       {
-        "id": "401857029",
-        "name": "Atlanta Dream at Seattle Storm",
-        "shortName": "ATL @ SEA",
-        "date": "2026-06-28T01:00Z",
+        "id": "401857032",
+        "name": "Las Vegas Aces at Chicago Sky",
+        "shortName": "LV @ CHI",
+        "date": "2026-06-28T20:00Z",
         "state": "pre",
-        "status": "6/27 - 9:00 PM EDT",
+        "status": "6/28 - 4:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "14",
-          "abbr": "SEA",
-          "name": "Seattle Storm",
+          "id": "19",
+          "abbr": "CHI",
+          "name": "Chicago Sky",
           "score": "0"
         },
         "away": {
-          "id": "20",
-          "abbr": "ATL",
-          "name": "Atlanta Dream",
+          "id": "17",
+          "abbr": "LV",
+          "name": "Las Vegas Aces",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401857033",
+        "name": "New York Liberty at Golden State Valkyries",
+        "shortName": "NY @ GS",
+        "date": "2026-06-28T23:00Z",
+        "state": "pre",
+        "status": "6/28 - 7:00 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "129689",
+          "abbr": "GS",
+          "name": "Golden State Valkyries",
+          "score": "0"
+        },
+        "away": {
+          "id": "9",
+          "abbr": "NY",
+          "name": "New York Liberty",
           "score": "0"
         }
       }
     ],
     "mlb": [
       {
-        "id": "401815924",
-        "name": "New York Yankees at Boston Red Sox",
-        "shortName": "NYY @ BOS",
-        "date": "2026-06-27T17:00Z",
-        "state": "pre",
-        "status": "6/27 - 1:00 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "2",
-          "abbr": "BOS",
-          "name": "Boston Red Sox",
-          "score": "0"
-        },
-        "away": {
-          "id": "10",
-          "abbr": "NYY",
-          "name": "New York Yankees",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401815923",
-        "name": "Houston Astros at Detroit Tigers",
-        "shortName": "HOU @ DET",
-        "date": "2026-06-27T17:10Z",
-        "state": "pre",
-        "status": "6/27 - 1:10 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "6",
-          "abbr": "DET",
-          "name": "Detroit Tigers",
-          "score": "0"
-        },
-        "away": {
-          "id": "18",
-          "abbr": "HOU",
-          "name": "Houston Astros",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401815927",
-        "name": "Texas Rangers at Toronto Blue Jays",
-        "shortName": "TEX @ TOR",
-        "date": "2026-06-27T19:07Z",
-        "state": "pre",
-        "status": "6/27 - 3:07 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "14",
-          "abbr": "TOR",
-          "name": "Toronto Blue Jays",
-          "score": "0"
-        },
-        "away": {
-          "id": "13",
-          "abbr": "TEX",
-          "name": "Texas Rangers",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401815922",
+        "id": "401815937",
         "name": "Cincinnati Reds at Pittsburgh Pirates",
         "shortName": "CIN @ PIT",
-        "date": "2026-06-27T20:05Z",
+        "date": "2026-06-28T17:35Z",
         "state": "pre",
-        "status": "6/27 - 4:05 PM EDT",
+        "status": "6/28 - 1:35 PM EDT",
         "completed": false,
         "home": {
           "id": "23",
@@ -152,75 +110,12 @@
         }
       },
       {
-        "id": "401815925",
-        "name": "Philadelphia Phillies at New York Mets",
-        "shortName": "PHI @ NYM",
-        "date": "2026-06-27T20:10Z",
-        "state": "pre",
-        "status": "6/27 - 4:10 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "21",
-          "abbr": "NYM",
-          "name": "New York Mets",
-          "score": "0"
-        },
-        "away": {
-          "id": "22",
-          "abbr": "PHI",
-          "name": "Philadelphia Phillies",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401815931",
-        "name": "Kansas City Royals at Chicago White Sox",
-        "shortName": "KC @ CHW",
-        "date": "2026-06-27T20:10Z",
-        "state": "pre",
-        "status": "6/27 - 4:10 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "4",
-          "abbr": "CHW",
-          "name": "Chicago White Sox",
-          "score": "0"
-        },
-        "away": {
-          "id": "7",
-          "abbr": "KC",
-          "name": "Kansas City Royals",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401815921",
-        "name": "Arizona Diamondbacks at Tampa Bay Rays",
-        "shortName": "ARI @ TB",
-        "date": "2026-06-27T22:10Z",
-        "state": "pre",
-        "status": "6/27 - 6:10 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "30",
-          "abbr": "TB",
-          "name": "Tampa Bay Rays",
-          "score": "0"
-        },
-        "away": {
-          "id": "29",
-          "abbr": "ARI",
-          "name": "Arizona Diamondbacks",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401815928",
+        "id": "401815943",
         "name": "Washington Nationals at Baltimore Orioles",
         "shortName": "WSH @ BAL",
-        "date": "2026-06-27T23:05Z",
+        "date": "2026-06-28T17:35Z",
         "state": "pre",
-        "status": "6/27 - 7:05 PM EDT",
+        "status": "6/28 - 1:35 PM EDT",
         "completed": false,
         "home": {
           "id": "1",
@@ -236,12 +131,96 @@
         }
       },
       {
-        "id": "401815926",
+        "id": "401815942",
+        "name": "Texas Rangers at Toronto Blue Jays",
+        "shortName": "TEX @ TOR",
+        "date": "2026-06-28T17:37Z",
+        "state": "pre",
+        "status": "6/28 - 1:37 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "14",
+          "abbr": "TOR",
+          "name": "Toronto Blue Jays",
+          "score": "0"
+        },
+        "away": {
+          "id": "13",
+          "abbr": "TEX",
+          "name": "Texas Rangers",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401815936",
+        "name": "Arizona Diamondbacks at Tampa Bay Rays",
+        "shortName": "ARI @ TB",
+        "date": "2026-06-28T17:40Z",
+        "state": "pre",
+        "status": "6/28 - 1:40 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "30",
+          "abbr": "TB",
+          "name": "Tampa Bay Rays",
+          "score": "0"
+        },
+        "away": {
+          "id": "29",
+          "abbr": "ARI",
+          "name": "Arizona Diamondbacks",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401815938",
+        "name": "Houston Astros at Detroit Tigers",
+        "shortName": "HOU @ DET",
+        "date": "2026-06-28T17:40Z",
+        "state": "pre",
+        "status": "6/28 - 1:40 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "6",
+          "abbr": "DET",
+          "name": "Detroit Tigers",
+          "score": "0"
+        },
+        "away": {
+          "id": "18",
+          "abbr": "HOU",
+          "name": "Houston Astros",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401815940",
+        "name": "Philadelphia Phillies at New York Mets",
+        "shortName": "PHI @ NYM",
+        "date": "2026-06-28T17:40Z",
+        "state": "pre",
+        "status": "6/28 - 1:40 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "21",
+          "abbr": "NYM",
+          "name": "New York Mets",
+          "score": "0"
+        },
+        "away": {
+          "id": "22",
+          "abbr": "PHI",
+          "name": "Philadelphia Phillies",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401815941",
         "name": "Seattle Mariners at Cleveland Guardians",
         "shortName": "SEA @ CLE",
-        "date": "2026-06-27T23:10Z",
+        "date": "2026-06-28T17:40Z",
         "state": "pre",
-        "status": "6/27 - 7:10 PM EDT",
+        "status": "6/28 - 1:40 PM EDT",
         "completed": false,
         "home": {
           "id": "5",
@@ -257,12 +236,12 @@
         }
       },
       {
-        "id": "401815929",
+        "id": "401815944",
         "name": "Chicago Cubs at Milwaukee Brewers",
         "shortName": "CHC @ MIL",
-        "date": "2026-06-27T23:10Z",
+        "date": "2026-06-28T18:10Z",
         "state": "pre",
-        "status": "6/27 - 7:10 PM EDT",
+        "status": "6/28 - 2:10 PM EDT",
         "completed": false,
         "home": {
           "id": "8",
@@ -278,12 +257,12 @@
         }
       },
       {
-        "id": "401815930",
+        "id": "401815945",
         "name": "Colorado Rockies at Minnesota Twins",
         "shortName": "COL @ MIN",
-        "date": "2026-06-27T23:10Z",
+        "date": "2026-06-28T18:10Z",
         "state": "pre",
-        "status": "6/27 - 7:10 PM EDT",
+        "status": "6/28 - 2:10 PM EDT",
         "completed": false,
         "home": {
           "id": "9",
@@ -299,12 +278,33 @@
         }
       },
       {
-        "id": "401815932",
+        "id": "401815946",
+        "name": "Kansas City Royals at Chicago White Sox",
+        "shortName": "KC @ CHW",
+        "date": "2026-06-28T18:10Z",
+        "state": "pre",
+        "status": "6/28 - 2:10 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "4",
+          "abbr": "CHW",
+          "name": "Chicago White Sox",
+          "score": "0"
+        },
+        "away": {
+          "id": "7",
+          "abbr": "KC",
+          "name": "Kansas City Royals",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401815947",
         "name": "Miami Marlins at St. Louis Cardinals",
         "shortName": "MIA @ STL",
-        "date": "2026-06-27T23:15Z",
+        "date": "2026-06-28T18:15Z",
         "state": "pre",
-        "status": "6/27 - 7:15 PM EDT",
+        "status": "6/28 - 2:15 PM EDT",
         "completed": false,
         "home": {
           "id": "24",
@@ -320,33 +320,33 @@
         }
       },
       {
-        "id": "401815935",
-        "name": "Los Angeles Dodgers at San Diego Padres",
-        "shortName": "LAD @ SD",
-        "date": "2026-06-28T00:40Z",
+        "id": "401815948",
+        "name": "Athletics Athletics at Los Angeles Angels",
+        "shortName": "ATH @ LAA",
+        "date": "2026-06-28T19:15Z",
         "state": "pre",
-        "status": "6/27 - 8:40 PM EDT",
+        "status": "6/28 - 3:15 PM EDT",
         "completed": false,
         "home": {
-          "id": "25",
-          "abbr": "SD",
-          "name": "San Diego Padres",
+          "id": "3",
+          "abbr": "LAA",
+          "name": "Los Angeles Angels",
           "score": "0"
         },
         "away": {
-          "id": "19",
-          "abbr": "LAD",
-          "name": "Los Angeles Dodgers",
+          "id": "11",
+          "abbr": "ATH",
+          "name": "Athletics",
           "score": "0"
         }
       },
       {
-        "id": "401815934",
+        "id": "401815949",
         "name": "Atlanta Braves at San Francisco Giants",
         "shortName": "ATL @ SF",
-        "date": "2026-06-28T01:05Z",
+        "date": "2026-06-28T20:05Z",
         "state": "pre",
-        "status": "6/27 - 9:05 PM EDT",
+        "status": "6/28 - 4:05 PM EDT",
         "completed": false,
         "home": {
           "id": "26",
@@ -362,23 +362,44 @@
         }
       },
       {
-        "id": "401815933",
-        "name": "Athletics Athletics at Los Angeles Angels",
-        "shortName": "ATH @ LAA",
-        "date": "2026-06-28T01:38Z",
+        "id": "401815950",
+        "name": "Los Angeles Dodgers at San Diego Padres",
+        "shortName": "LAD @ SD",
+        "date": "2026-06-28T20:10Z",
         "state": "pre",
-        "status": "6/27 - 9:38 PM EDT",
+        "status": "6/28 - 4:10 PM EDT",
         "completed": false,
         "home": {
-          "id": "3",
-          "abbr": "LAA",
-          "name": "Los Angeles Angels",
+          "id": "25",
+          "abbr": "SD",
+          "name": "San Diego Padres",
           "score": "0"
         },
         "away": {
-          "id": "11",
-          "abbr": "ATH",
-          "name": "Athletics",
+          "id": "19",
+          "abbr": "LAD",
+          "name": "Los Angeles Dodgers",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401815939",
+        "name": "New York Yankees at Boston Red Sox",
+        "shortName": "NYY @ BOS",
+        "date": "2026-06-28T23:20Z",
+        "state": "pre",
+        "status": "6/28 - 7:20 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "2",
+          "abbr": "BOS",
+          "name": "Boston Red Sox",
+          "score": "0"
+        },
+        "away": {
+          "id": "10",
+          "abbr": "NYY",
+          "name": "New York Yankees",
           "score": "0"
         }
       }
