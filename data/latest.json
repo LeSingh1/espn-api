@@ -1,69 +1,67 @@
 {
-  "date": "20260714",
+  "date": "20260715",
   "sports": {
     "wnba": [
       {
-        "id": "401857066",
-        "name": "Portland Fire at Connecticut Sun",
-        "shortName": "POR @ CON",
-        "date": "2026-07-14T15:00Z",
+        "id": "401857068",
+        "name": "Seattle Storm at Chicago Sky",
+        "shortName": "SEA @ CHI",
+        "date": "2026-07-15T16:00Z",
         "state": "pre",
-        "status": "7/14 - 11:00 AM EDT",
+        "status": "7/15 - 12:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "18",
-          "abbr": "CON",
-          "name": "Connecticut Sun",
+          "id": "19",
+          "abbr": "CHI",
+          "name": "Chicago Sky",
           "score": "0"
         },
         "away": {
-          "id": "132052",
-          "abbr": "POR",
-          "name": "Portland Fire",
+          "id": "14",
+          "abbr": "SEA",
+          "name": "Seattle Storm",
           "score": "0"
         }
       },
       {
-        "id": "401857067",
-        "name": "Washington Mystics at Toronto Tempo",
-        "shortName": "WSH @ TOR",
-        "date": "2026-07-14T23:00Z",
+        "id": "401857069",
+        "name": "Los Angeles Sparks at Minnesota Lynx",
+        "shortName": "LA @ MIN",
+        "date": "2026-07-15T17:00Z",
         "state": "pre",
-        "status": "7/14 - 7:00 PM EDT",
+        "status": "7/15 - 1:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "131935",
-          "abbr": "TOR",
-          "name": "Toronto Tempo",
+          "id": "8",
+          "abbr": "MIN",
+          "name": "Minnesota Lynx",
           "score": "0"
         },
         "away": {
-          "id": "16",
-          "abbr": "WSH",
-          "name": "Washington Mystics",
+          "id": "6",
+          "abbr": "LA",
+          "name": "Los Angeles Sparks",
           "score": "0"
         }
-      }
-    ],
-    "mlb": [
+      },
       {
-        "id": "401817370",
-        "name": "American All-Stars at National All-Stars",
-        "shortName": "AL VS NL",
-        "date": "2026-07-15T00:00Z",
+        "id": "401857070",
+        "name": "Golden State Valkyries at Indiana Fever",
+        "shortName": "GS @ IND",
+        "date": "2026-07-16T00:00Z",
         "state": "pre",
-        "status": "7/14 - 8:00 PM EDT",
+        "status": "7/15 - 8:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "32",
-          "abbr": "NL",
-          "name": "National All-Stars",
+          "id": "5",
+          "abbr": "IND",
+          "name": "Indiana Fever",
           "score": "0"
         },
         "away": {
-          "id": "31",
-          "abbr": "AL",
-          "name": "American All-Stars",
+          "id": "129689",
+          "abbr": "GS",
+          "name": "Golden State Valkyries",
           "score": "0"
         }
       }
