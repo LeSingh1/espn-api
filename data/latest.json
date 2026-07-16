@@ -1,67 +1,69 @@
 {
-  "date": "20260715",
+  "date": "20260716",
   "sports": {
     "wnba": [
       {
-        "id": "401857068",
-        "name": "Seattle Storm at Chicago Sky",
-        "shortName": "SEA @ CHI",
-        "date": "2026-07-15T16:00Z",
+        "id": "401857071",
+        "name": "Portland Fire at Washington Mystics",
+        "shortName": "POR @ WSH",
+        "date": "2026-07-16T23:00Z",
         "state": "pre",
-        "status": "7/15 - 12:00 PM EDT",
+        "status": "7/16 - 7:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "19",
-          "abbr": "CHI",
-          "name": "Chicago Sky",
+          "id": "16",
+          "abbr": "WSH",
+          "name": "Washington Mystics",
           "score": "0"
         },
         "away": {
-          "id": "14",
-          "abbr": "SEA",
-          "name": "Seattle Storm",
+          "id": "132052",
+          "abbr": "POR",
+          "name": "Portland Fire",
           "score": "0"
         }
       },
       {
-        "id": "401857069",
-        "name": "Los Angeles Sparks at Minnesota Lynx",
-        "shortName": "LA @ MIN",
-        "date": "2026-07-15T17:00Z",
+        "id": "401857072",
+        "name": "New York Liberty at Dallas Wings",
+        "shortName": "NY @ DAL",
+        "date": "2026-07-17T01:00Z",
         "state": "pre",
-        "status": "7/15 - 1:00 PM EDT",
+        "status": "7/16 - 9:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "8",
-          "abbr": "MIN",
-          "name": "Minnesota Lynx",
+          "id": "3",
+          "abbr": "DAL",
+          "name": "Dallas Wings",
           "score": "0"
         },
         "away": {
-          "id": "6",
-          "abbr": "LA",
-          "name": "Los Angeles Sparks",
+          "id": "9",
+          "abbr": "NY",
+          "name": "New York Liberty",
           "score": "0"
         }
-      },
+      }
+    ],
+    "mlb": [
       {
-        "id": "401857070",
-        "name": "Golden State Valkyries at Indiana Fever",
-        "shortName": "GS @ IND",
-        "date": "2026-07-16T00:00Z",
+        "id": "401816143",
+        "name": "New York Mets at Philadelphia Phillies",
+        "shortName": "NYM @ PHI",
+        "date": "2026-07-16T23:00Z",
         "state": "pre",
-        "status": "7/15 - 8:00 PM EDT",
+        "status": "7/16 - 7:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "5",
-          "abbr": "IND",
-          "name": "Indiana Fever",
+          "id": "22",
+          "abbr": "PHI",
+          "name": "Philadelphia Phillies",
           "score": "0"
         },
         "away": {
-          "id": "129689",
-          "abbr": "GS",
-          "name": "Golden State Valkyries",
+          "id": "21",
+          "abbr": "NYM",
+          "name": "New York Mets",
           "score": "0"
         }
       }
