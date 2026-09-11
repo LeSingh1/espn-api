@@ -1,105 +1,40 @@
 {
-  "date": "20260910",
+  "date": "20260911",
   "sports": {
-    "nfl": [
-      {
-        "id": "401872657",
-        "name": "San Francisco 49ers at Los Angeles Rams",
-        "shortName": "SF VS LAR",
-        "date": "2026-09-11T00:35Z",
-        "state": "pre",
-        "status": "9/10 - 8:35 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "14",
-          "abbr": "LAR",
-          "name": "Los Angeles Rams",
-          "score": "0"
-        },
-        "away": {
-          "id": "25",
-          "abbr": "SF",
-          "name": "San Francisco 49ers",
-          "score": "0"
-        }
-      }
-    ],
     "mlb": [
       {
-        "id": "401816885",
-        "name": "Tampa Bay Rays at Atlanta Braves",
-        "shortName": "TB @ ATL",
-        "date": "2026-09-10T16:15Z",
-        "state": "in",
-        "status": "Top 1st",
+        "id": "401816899",
+        "name": "Pittsburgh Pirates at Chicago Cubs",
+        "shortName": "PIT @ CHC",
+        "date": "2026-09-11T18:20Z",
+        "state": "pre",
+        "status": "9/11 - 2:20 PM EDT",
         "completed": false,
         "home": {
-          "id": "15",
-          "abbr": "ATL",
-          "name": "Atlanta Braves",
+          "id": "16",
+          "abbr": "CHC",
+          "name": "Chicago Cubs",
           "score": "0"
         },
         "away": {
-          "id": "30",
-          "abbr": "TB",
-          "name": "Tampa Bay Rays",
+          "id": "23",
+          "abbr": "PIT",
+          "name": "Pittsburgh Pirates",
           "score": "0"
         }
       },
       {
-        "id": "401816884",
-        "name": "Houston Astros at Philadelphia Phillies",
-        "shortName": "HOU @ PHI",
-        "date": "2026-09-10T17:05Z",
+        "id": "401816890",
+        "name": "Colorado Rockies at Detroit Tigers",
+        "shortName": "COL @ DET",
+        "date": "2026-09-11T22:40Z",
         "state": "pre",
-        "status": "9/10 - 1:05 PM EDT",
+        "status": "9/11 - 6:40 PM EDT",
         "completed": false,
         "home": {
-          "id": "22",
-          "abbr": "PHI",
-          "name": "Philadelphia Phillies",
-          "score": "0"
-        },
-        "away": {
-          "id": "18",
-          "abbr": "HOU",
-          "name": "Houston Astros",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401816887",
-        "name": "Texas Rangers at Seattle Mariners",
-        "shortName": "TEX @ SEA",
-        "date": "2026-09-10T20:10Z",
-        "state": "pre",
-        "status": "9/10 - 4:10 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "12",
-          "abbr": "SEA",
-          "name": "Seattle Mariners",
-          "score": "0"
-        },
-        "away": {
-          "id": "13",
-          "abbr": "TEX",
-          "name": "Texas Rangers",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401816883",
-        "name": "Colorado Rockies at New York Yankees",
-        "shortName": "COL @ NYY",
-        "date": "2026-09-10T23:05Z",
-        "state": "pre",
-        "status": "9/10 - 7:05 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "10",
-          "abbr": "NYY",
-          "name": "New York Yankees",
+          "id": "6",
+          "abbr": "DET",
+          "name": "Detroit Tigers",
           "score": "0"
         },
         "away": {
@@ -110,23 +45,275 @@
         }
       },
       {
-        "id": "401816886",
-        "name": "Pittsburgh Pirates at Chicago White Sox",
-        "shortName": "PIT @ CHW",
-        "date": "2026-09-10T23:40Z",
+        "id": "401816888",
+        "name": "Los Angeles Angels at Washington Nationals",
+        "shortName": "LAA @ WSH",
+        "date": "2026-09-11T22:45Z",
         "state": "pre",
-        "status": "9/10 - 7:40 PM EDT",
+        "status": "9/11 - 6:45 PM EDT",
         "completed": false,
         "home": {
+          "id": "20",
+          "abbr": "WSH",
+          "name": "Washington Nationals",
+          "score": "0"
+        },
+        "away": {
+          "id": "3",
+          "abbr": "LAA",
+          "name": "Los Angeles Angels",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816894",
+        "name": "New York Mets at New York Yankees",
+        "shortName": "NYM @ NYY",
+        "date": "2026-09-11T23:05Z",
+        "state": "pre",
+        "status": "9/11 - 7:05 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "10",
+          "abbr": "NYY",
+          "name": "New York Yankees",
+          "score": "0"
+        },
+        "away": {
+          "id": "21",
+          "abbr": "NYM",
+          "name": "New York Mets",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816889",
+        "name": "Baltimore Orioles at Toronto Blue Jays",
+        "shortName": "BAL @ TOR",
+        "date": "2026-09-11T23:07Z",
+        "state": "pre",
+        "status": "9/11 - 7:07 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "14",
+          "abbr": "TOR",
+          "name": "Toronto Blue Jays",
+          "score": "0"
+        },
+        "away": {
+          "id": "1",
+          "abbr": "BAL",
+          "name": "Baltimore Orioles",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816891",
+        "name": "Houston Astros at Tampa Bay Rays",
+        "shortName": "HOU @ TB",
+        "date": "2026-09-11T23:10Z",
+        "state": "pre",
+        "status": "9/11 - 7:10 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "30",
+          "abbr": "TB",
+          "name": "Tampa Bay Rays",
+          "score": "0"
+        },
+        "away": {
+          "id": "18",
+          "abbr": "HOU",
+          "name": "Houston Astros",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816892",
+        "name": "Kansas City Royals at Boston Red Sox",
+        "shortName": "KC @ BOS",
+        "date": "2026-09-11T23:10Z",
+        "state": "pre",
+        "status": "9/11 - 7:10 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "2",
+          "abbr": "BOS",
+          "name": "Boston Red Sox",
+          "score": "0"
+        },
+        "away": {
+          "id": "7",
+          "abbr": "KC",
+          "name": "Kansas City Royals",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816893",
+        "name": "Los Angeles Dodgers at Miami Marlins",
+        "shortName": "LAD @ MIA",
+        "date": "2026-09-11T23:10Z",
+        "state": "pre",
+        "status": "9/11 - 7:10 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "28",
+          "abbr": "MIA",
+          "name": "Miami Marlins",
+          "score": "0"
+        },
+        "away": {
+          "id": "19",
+          "abbr": "LAD",
+          "name": "Los Angeles Dodgers",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816895",
+        "name": "Philadelphia Phillies at Atlanta Braves",
+        "shortName": "PHI @ ATL",
+        "date": "2026-09-11T23:15Z",
+        "state": "pre",
+        "status": "9/11 - 7:15 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "15",
+          "abbr": "ATL",
+          "name": "Atlanta Braves",
+          "score": "0"
+        },
+        "away": {
+          "id": "22",
+          "abbr": "PHI",
+          "name": "Philadelphia Phillies",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816897",
+        "name": "Cincinnati Reds at Milwaukee Brewers",
+        "shortName": "CIN @ MIL",
+        "date": "2026-09-11T23:40Z",
+        "state": "pre",
+        "status": "9/11 - 7:40 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "8",
+          "abbr": "MIL",
+          "name": "Milwaukee Brewers",
+          "score": "0"
+        },
+        "away": {
+          "id": "17",
+          "abbr": "CIN",
+          "name": "Cincinnati Reds",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816898",
+        "name": "Cleveland Guardians at Minnesota Twins",
+        "shortName": "CLE @ MIN",
+        "date": "2026-09-12T00:10Z",
+        "state": "pre",
+        "status": "9/11 - 8:10 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "9",
+          "abbr": "MIN",
+          "name": "Minnesota Twins",
+          "score": "0"
+        },
+        "away": {
+          "id": "5",
+          "abbr": "CLE",
+          "name": "Cleveland Guardians",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816896",
+        "name": "Chicago White Sox at St. Louis Cardinals",
+        "shortName": "CHW @ STL",
+        "date": "2026-09-12T00:15Z",
+        "state": "pre",
+        "status": "9/11 - 8:15 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "24",
+          "abbr": "STL",
+          "name": "St. Louis Cardinals",
+          "score": "0"
+        },
+        "away": {
           "id": "4",
           "abbr": "CHW",
           "name": "Chicago White Sox",
           "score": "0"
+        }
+      },
+      {
+        "id": "401816901",
+        "name": "Seattle Mariners at Athletics Athletics",
+        "shortName": "SEA @ ATH",
+        "date": "2026-09-12T01:40Z",
+        "state": "pre",
+        "status": "9/11 - 9:40 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "11",
+          "abbr": "ATH",
+          "name": "Athletics",
+          "score": "0"
         },
         "away": {
-          "id": "23",
-          "abbr": "PIT",
-          "name": "Pittsburgh Pirates",
+          "id": "12",
+          "abbr": "SEA",
+          "name": "Seattle Mariners",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816902",
+        "name": "Texas Rangers at Arizona Diamondbacks",
+        "shortName": "TEX @ ARI",
+        "date": "2026-09-12T01:40Z",
+        "state": "pre",
+        "status": "9/11 - 9:40 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "29",
+          "abbr": "ARI",
+          "name": "Arizona Diamondbacks",
+          "score": "0"
+        },
+        "away": {
+          "id": "13",
+          "abbr": "TEX",
+          "name": "Texas Rangers",
+          "score": "0"
+        }
+      },
+      {
+        "id": "401816900",
+        "name": "San Diego Padres at San Francisco Giants",
+        "shortName": "SD @ SF",
+        "date": "2026-09-12T02:15Z",
+        "state": "pre",
+        "status": "9/11 - 10:15 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "26",
+          "abbr": "SF",
+          "name": "San Francisco Giants",
+          "score": "0"
+        },
+        "away": {
+          "id": "25",
+          "abbr": "SD",
+          "name": "San Diego Padres",
           "score": "0"
         }
       }
