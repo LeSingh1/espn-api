@@ -1,241 +1,132 @@
 {
-  "date": "20261001",
+  "date": "20261002",
   "sports": {
     "wnba": [
       {
-        "id": "401918022",
-        "name": "Indiana Fever at Las Vegas Aces",
-        "shortName": "IND @ LV",
-        "date": "2026-10-02T01:00Z",
+        "id": "401918294",
+        "name": "Dallas Wings at Golden State Valkyries",
+        "shortName": "DAL @ GS",
+        "date": "2026-10-03T01:00Z",
         "state": "pre",
-        "status": "10/1 - 9:00 PM EDT",
+        "status": "10/2 - 9:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "17",
-          "abbr": "LV",
-          "name": "Las Vegas Aces",
+          "id": "129689",
+          "abbr": "GS",
+          "name": "Golden State Valkyries",
           "score": "0"
         },
         "away": {
-          "id": "5",
-          "abbr": "IND",
-          "name": "Indiana Fever",
-          "score": "0"
-        }
-      }
-    ],
-    "nfl": [
-      {
-        "id": "401872964",
-        "name": "Pittsburgh Steelers at Cleveland Browns",
-        "shortName": "PIT @ CLE",
-        "date": "2026-10-02T00:15Z",
-        "state": "pre",
-        "status": "10/1 - 8:15 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "5",
-          "abbr": "CLE",
-          "name": "Cleveland Browns",
-          "score": "0"
-        },
-        "away": {
-          "id": "23",
-          "abbr": "PIT",
-          "name": "Pittsburgh Steelers",
-          "score": "0"
-        }
-      }
-    ],
-    "mlb": [
-      {
-        "id": "401907973",
-        "name": "Philadelphia Phillies at Atlanta Braves",
-        "shortName": "PHI @ ATL",
-        "date": "2026-10-02T00:00Z",
-        "state": "pre",
-        "status": "10/1 - 8:00 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "15",
-          "abbr": "ATL",
-          "name": "Atlanta Braves",
-          "score": "0"
-        },
-        "away": {
-          "id": "22",
-          "abbr": "PHI",
-          "name": "Philadelphia Phillies",
+          "id": "3",
+          "abbr": "DAL",
+          "name": "Dallas Wings",
           "score": "0"
         }
       }
     ],
     "nhl": [
       {
-        "id": "401891781",
-        "name": "Buffalo Sabres at Columbus Blue Jackets",
-        "shortName": "BUF @ CBJ",
-        "date": "2026-10-01T23:00Z",
+        "id": "401891803",
+        "name": "New York Rangers at Detroit Red Wings",
+        "shortName": "NYR @ DET",
+        "date": "2026-10-02T22:30Z",
         "state": "pre",
-        "status": "10/1 - 7:00 PM EDT",
+        "status": "10/2 - 6:30 PM EDT",
         "completed": false,
         "home": {
-          "id": "29",
-          "abbr": "CBJ",
-          "name": "Columbus Blue Jackets",
+          "id": "5",
+          "abbr": "DET",
+          "name": "Detroit Red Wings",
           "score": "0"
         },
         "away": {
-          "id": "2",
-          "abbr": "BUF",
-          "name": "Buffalo Sabres",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401891817",
-        "name": "Philadelphia Flyers at New Jersey Devils",
-        "shortName": "PHI @ NJ",
-        "date": "2026-10-01T23:00Z",
-        "state": "pre",
-        "status": "10/1 - 7:00 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "11",
-          "abbr": "NJ",
-          "name": "New Jersey Devils",
-          "score": "0"
-        },
-        "away": {
-          "id": "15",
-          "abbr": "PHI",
-          "name": "Philadelphia Flyers",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401891819",
-        "name": "Tampa Bay Lightning at New York Rangers",
-        "shortName": "TB @ NYR",
-        "date": "2026-10-01T23:00Z",
-        "state": "pre",
-        "status": "10/1 - 7:00 PM EDT",
-        "completed": false,
-        "home": {
           "id": "13",
           "abbr": "NYR",
           "name": "New York Rangers",
           "score": "0"
+        }
+      },
+      {
+        "id": "401892432",
+        "name": "Washington Capitals at Carolina Hurricanes",
+        "shortName": "WSH @ CAR",
+        "date": "2026-10-02T23:00Z",
+        "state": "pre",
+        "status": "10/2 - 7:00 PM EDT",
+        "completed": false,
+        "home": {
+          "id": "7",
+          "abbr": "CAR",
+          "name": "Carolina Hurricanes",
+          "score": "0"
         },
         "away": {
-          "id": "20",
-          "abbr": "TB",
-          "name": "Tampa Bay Lightning",
+          "id": "23",
+          "abbr": "WSH",
+          "name": "Washington Capitals",
           "score": "0"
         }
       },
       {
-        "id": "401891816",
-        "name": "Minnesota Wild at Nashville Predators",
-        "shortName": "MIN @ NSH",
-        "date": "2026-10-02T00:00Z",
+        "id": "401891831",
+        "name": "Boston Bruins at Winnipeg Jets",
+        "shortName": "BOS @ WPG",
+        "date": "2026-10-03T00:00Z",
         "state": "pre",
-        "status": "10/1 - 8:00 PM EDT",
+        "status": "10/2 - 8:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "27",
-          "abbr": "NSH",
-          "name": "Nashville Predators",
+          "id": "28",
+          "abbr": "WPG",
+          "name": "Winnipeg Jets",
           "score": "0"
         },
         "away": {
-          "id": "30",
-          "abbr": "MIN",
-          "name": "Minnesota Wild",
+          "id": "1",
+          "abbr": "BOS",
+          "name": "Boston Bruins",
           "score": "0"
         }
       },
       {
-        "id": "401891777",
-        "name": "Seattle Kraken at Calgary Flames",
-        "shortName": "SEA @ CGY",
-        "date": "2026-10-02T01:00Z",
+        "id": "401891782",
+        "name": "St. Louis Blues at Dallas Stars",
+        "shortName": "STL @ DAL",
+        "date": "2026-10-03T01:00Z",
         "state": "pre",
-        "status": "10/1 - 9:00 PM EDT",
+        "status": "10/2 - 9:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "3",
-          "abbr": "CGY",
-          "name": "Calgary Flames",
+          "id": "9",
+          "abbr": "DAL",
+          "name": "Dallas Stars",
           "score": "0"
         },
         "away": {
-          "id": "124292",
-          "abbr": "SEA",
-          "name": "Seattle Kraken",
+          "id": "19",
+          "abbr": "STL",
+          "name": "St. Louis Blues",
           "score": "0"
         }
       },
       {
-        "id": "401891828",
-        "name": "Chicago Blackhawks at Utah Mammoth",
-        "shortName": "CHI @ UTA",
-        "date": "2026-10-02T01:30Z",
+        "id": "401892433",
+        "name": "Anaheim Ducks at Vegas Golden Knights",
+        "shortName": "ANA @ VGK",
+        "date": "2026-10-03T02:00Z",
         "state": "pre",
-        "status": "10/1 - 9:30 PM EDT",
+        "status": "10/2 - 10:00 PM EDT",
         "completed": false,
         "home": {
-          "id": "129764",
-          "abbr": "UTA",
-          "name": "Utah Mammoth",
+          "id": "37",
+          "abbr": "VGK",
+          "name": "Vegas Golden Knights",
           "score": "0"
         },
         "away": {
-          "id": "4",
-          "abbr": "CHI",
-          "name": "Chicago Blackhawks",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401891823",
-        "name": "Florida Panthers at San Jose Sharks",
-        "shortName": "FLA @ SJ",
-        "date": "2026-10-02T02:00Z",
-        "state": "pre",
-        "status": "10/1 - 10:00 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "18",
-          "abbr": "SJ",
-          "name": "San Jose Sharks",
-          "score": "0"
-        },
-        "away": {
-          "id": "26",
-          "abbr": "FLA",
-          "name": "Florida Panthers",
-          "score": "0"
-        }
-      },
-      {
-        "id": "401891829",
-        "name": "Edmonton Oilers at Vancouver Canucks",
-        "shortName": "EDM @ VAN",
-        "date": "2026-10-02T02:00Z",
-        "state": "pre",
-        "status": "10/1 - 10:00 PM EDT",
-        "completed": false,
-        "home": {
-          "id": "22",
-          "abbr": "VAN",
-          "name": "Vancouver Canucks",
-          "score": "0"
-        },
-        "away": {
-          "id": "6",
-          "abbr": "EDM",
-          "name": "Edmonton Oilers",
+          "id": "25",
+          "abbr": "ANA",
+          "name": "Anaheim Ducks",
           "score": "0"
         }
       }
